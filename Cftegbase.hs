@@ -1,20 +1,17 @@
 -- the base of making cft examples, Cftegbase
 module Cftegbase
-( pfallt
-, pfallf
+( pfallt, pfallf
 , Tst(..)
-, transtree
-, treechk
+, transtree, treechk
 ) where
 
 import Cftdef
 
 -- When only dealing with wfs, not pfs.
-pfallt :: Vwf -> Cft
-pfallt u = Cft u (\x -> True)
-pfallf :: Vwf -> Cft
-pfallf u = Cft u (\x -> False)
-
+pfallt :: Vwf -> Purecft
+pfallt u = Purecft u (\x -> True)
+pfallf :: Vwf -> Purecft
+pfallf u = Purecft u (\x -> False)
 -- Ttree for transformed tree
 -- data Ttree a = Tnd a | Tbr { getTtree :: [Ttree a] } deriving (Show)
 -- data Tst = Ttree String

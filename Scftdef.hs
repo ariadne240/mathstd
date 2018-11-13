@@ -1,18 +1,20 @@
 -- the definition of Structured CFT(STCF), scftdef
 module Scftdef
-( Vbcft(..)
-, Verbosepf
-, Vverbosepf
-, Toverbosepf
+( Verbose(..), Vbcft(..), Verbosepf, Vverbosepf, Toverbosepf
 , toverbosepf
-, cfttovbcft
-, vbcfttocft
+, puretovb, vbtopure
 ) where
 
 import Cftdef
 
-data Vbcft = Vbcft { vwf :: Vwf, vpf :: Vpf, vverbosepf :: Vverbosepf }
--- vwf :: Vbcft -> Vwf, vpf :: Vbcft -> Vpf, vvberosepf :: Vbcft -> Vverbosepf
+data Vbcft = Vbcft Vwf Vpf Vverbosepf
+class Verbose a where
+ vverbosepf :: a -> Vverbosepf
+instance Cft Vbcft where
+ vwf (Vbcft x y _) = x
+ vpf (Vbcft x y _) = y
+instance Verbose Vbcft where
+ vverbosepf (Vbcft _ _ x) = x
 type Cdverbosepf = ([Wf], [(Wf, String)])
 data Verbosepf = Verbosepf (Maybe Cdverbosepf)
 type Vverbosepf = Cdverbosepf -> Bool
@@ -21,18 +23,10 @@ toverbosepf :: Vbcft -> Toverbosepf
 toverbosepf x y
  | vverbosepf x y = Verbosepf (Just y)
  | otherwise      = Verbosepf Nothing
-towf :: Vbcft -> Towf
-towf x y
- | vwf x y   = Wf (Just y)
- | otherwise = Wf Nothing
-topf :: Vbcft -> Topf
-topf x y
- | vpf x y   = Pf (Just y)
- | otherwise = Pf Nothing
-cfttovbcft :: Cft -> Vbcft
-cfttovbcft (Cft x y) = Vbcft x y (\x -> True)
-vbcfttocft :: Vbcft -> Cft
-vbcfttocft (Vbcft x y z) = Cft x y
+puretovb :: Purecft -> Vbcft
+puretovb (Purecft x y) = Vbcft x y (\x -> True)
+vbtopure :: Vbcft -> Purecft
+vbtopure (Vbcft x y z) = Purecft x y
 {--
 -- Interpret
 type Cdinterpretable = Exp

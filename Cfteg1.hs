@@ -1,12 +1,7 @@
 -- the rigid examples of cfts, Cfteg1
 module Cfteg1
-( cft1
-, cft2
-, cft3
-, cft4
-, cft5
-, cft6
-, cft7
+( cft1, cft2, cft3, cft4, cft5, cft6 -- Purecft
+, cft7 -- Vbcft
 ) where
 
 import Cftdef
@@ -14,21 +9,21 @@ import Cftegbase
 import Scftdef
 
 -- Elementary cfts
-cft1 :: Cft
+cft1 :: Purecft
 cft1 = pfallt (\x -> True)
-cft2 :: Cft
+cft2 :: Purecft
 cft2 = pfallf (\x -> True)
-cft3 :: Cft
+cft3 :: Purecft
 cft3 = pfallf (\x -> False)
 -- Using some trees
-cft4 :: Cft
+cft4 :: Purecft
 cft4 = pfallt cft4wf
 cft4wf :: Vwf
 cft4wf = cft4tr . transtree
 cft4tr :: Maybe Tst -> Bool
 cft4tr = treechk (\x -> True)
 -- Cft which checks tree structure
-cft5 :: Cft
+cft5 :: Purecft
 cft5 = pfallt cft5wf
 cft5wf :: Vwf
 cft5wf = cft5tr . transtree
@@ -39,7 +34,7 @@ cft5trr ls (Tnd [])     = False
 cft5trr ls (Tnd (x:xs)) = x `elem` ls
 cft5trr ls (Tbr y)      = and $ fmap (cft5trr ls) y
 -- More cft which checks tree structure
-cft6 :: Cft
+cft6 :: Purecft
 cft6 = pfallt cft6wf
 cft6wf :: Vwf
 cft6wf = cft6tr . transtree

@@ -15,11 +15,11 @@ main = do
  print $ towf (cftch n) x
 
 cftch :: Int -> Vbcft
-cftch 1 = cfttovbcft cft1
-cftch 2 = cfttovbcft cft2
-cftch 3 = cfttovbcft cft3
-cftch 4 = cfttovbcft cft4
-cftch 5 = cfttovbcft cft5
-cftch 6 = cfttovbcft cft6
+cftch 1 = puretovb cft1
+cftch 2 = puretovb cft2
+cftch 3 = puretovb cft3
+cftch 4 = puretovb cft4
+cftch 5 = puretovb cft5
+cftch 6 = puretovb cft6
 cftch 7 = cft7
-cftch _ = cfttovbcft cft1
+cftch _ = puretovb cft1
