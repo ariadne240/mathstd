@@ -1,8 +1,11 @@
 -- the definition of Structured CFT(STCF), scftdef
 module Scftdef
-( Verbose(..), Vbcft(..), Verbosepf, Vverbosepf, Toverbosepf
+(
+-- Verbose part
+  Verbose(..), Vbcft(..), Verbosepf, Vverbosepf, Toverbosepf
 , toverbosepf
-, puretovb, vbtopure
+, unverbosify, verbosify -- Verbose pf to Pf, Pf to Verbose pf
+, puretovb, vbtopure -- Purecft to Vbcft, Vbcft to Purecft
 ) where
 
 import Cftdef
@@ -23,8 +26,12 @@ toverbosepf :: Vbcft -> Toverbosepf
 toverbosepf x y
  | vverbosepf x y = Verbosepf (Just y)
  | otherwise      = Verbosepf Nothing
+unverbosify :: Vverbosepf -> Vpf
+unverbosify x = (\x -> True)
+verbosify :: Vpf -> Vverbosepf
+verbosify x = (\x -> True)
 puretovb :: Purecft -> Vbcft
-puretovb (Purecft x y) = Vbcft x y (\x -> True)
+puretovb (Purecft x y) = Vbcft x y (verbosify y)
 vbtopure :: Vbcft -> Purecft
 vbtopure (Vbcft x y z) = Purecft x y
 {--

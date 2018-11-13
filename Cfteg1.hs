@@ -57,6 +57,6 @@ cft6trr ls (Tnd (x:xs)) = x `elem` ls
 cft7 :: Vbcft
 cft7 = Vbcft cft6wf cft7pf cft7vpf
 cft7pf :: Vpf
-cft7pf = (\x -> True)
+cft7pf = unverbosify cft7vpf
 cft7vpf :: Vverbosepf
 cft7vpf = (\x -> True)
