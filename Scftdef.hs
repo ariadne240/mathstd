@@ -2,7 +2,7 @@
 module Scftdef
 (
 -- Verbose part
-  Verbose(..), Vbcft(..), Verbosepf, Vverbosepf, Toverbosepf
+  Verbose(..), Vbcft(..), Verbosepf, Cdverbosepf, Vverbosepf, Toverbosepf
 , toverbosepf
 , unverbosify, verbosify -- Verbose pf to Pf, Pf to Verbose pf
 , puretovb, vbtopure -- Purecft to Vbcft, Vbcft to Purecft

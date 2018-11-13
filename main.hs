@@ -7,12 +7,16 @@ import Scftdef
 
 main :: IO()
 main = do
- print "Which cft do you want to use?"
+ putStrLn "Which cft do you want to use?"
  n <- readLn
- print "Insert your expression."
- x <- getLine
- print "Your wf:"
- print $ towf (cftch n) x
+ putStrLn "What do you want to do?"
+ putStrLn "Possible choices:"
+ putStrLn "'wf', 'pf'"
+ w <- getLine
+ putStrLn "Insert your expression."
+ y <- getLine
+ putStrLn "Your wf:"
+ print $ towf (cftch n) y
 
 cftch :: Int -> Vbcft
 cftch 1 = puretovb cft1
