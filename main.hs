@@ -16,6 +16,9 @@ welcome = do
  putStrLn "What do you want to do?"
  putStrLn "Possible choices: 'wf', 'pf'"
  putStrLn "You can always shut down Mathverse with 'end'"
+ putStrLn "If you want to add your own cft, shut down this and modify the code."
+-- The sentence above does not give you any rights to use, share or modify the code.
+-- It is NOT about license; I, and I alone have all rights.
  w <- getLine
  case (w) of
   "end"     -> shutdown
