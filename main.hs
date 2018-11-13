@@ -14,11 +14,12 @@ main = do
  print "Your wf:"
  print $ towf (cftch n) x
 
-cftch :: Int -> Cft
-cftch 1 = cft1
-cftch 2 = cft2
-cftch 3 = cft3
-cftch 4 = cft4
-cftch 5 = cft5
-cftch 6 = cft6
-cftch _ = cft1
+cftch :: Int -> Vbcft
+cftch 1 = cfttovbcft cft1
+cftch 2 = cfttovbcft cft2
+cftch 3 = cfttovbcft cft3
+cftch 4 = cfttovbcft cft4
+cftch 5 = cfttovbcft cft5
+cftch 6 = cfttovbcft cft6
+cftch 7 = cft7
+cftch _ = cfttovbcft cft1

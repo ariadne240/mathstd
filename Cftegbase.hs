@@ -4,6 +4,7 @@ module Cftegbase
 , pfallf
 , Tst(..)
 , transtree
+, treechk
 ) where
 
 import Cftdef
@@ -19,9 +20,7 @@ pfallf u = Cft u (\x -> False)
 -- data Tst = Ttree String
 -- But error occurred.... :(
 data Tst = Tnd String | Tbr { getTtree :: [Tst] } deriving (Eq, Ord, Show, Read)
--- proc for processing (Still needs fixing)
--- l for layer, wd for word, bt for building tree
--- Use "Sorry (I can (only afford to) lose) (one friend) today"
+-- proc for processing: l for layer, wd for word, bt for building tree
 proc :: Char -> (Int, String, Tst) -> Maybe (Int, String, Tst)
 proc c (l, wd, bt)
  | c == ' '  = Just (l, [], btadd wd l bt)
@@ -29,7 +28,33 @@ proc c (l, wd, bt)
  | c == '('  = case (l) of
                 0 -> Nothing
                 _ -> Just (l-1, [], btadd wd l bt)
+ -- takes some care of special characters...
+ | c == '~'  = Just (l, wd, bt) -- Special character '~', ignore it!
+ | c == '`'  = Just (l, wd, bt) -- Special character '`', ignore it!
  | c == '!'  = Just (l, wd, bt) -- Special character '!', ignore it!
+ | c == '@'  = Just (l, wd, bt) -- Special character '@', ignore it!
+ | c == '#'  = Just (l, wd, bt) -- Special character '#', ignore it!
+ | c == '$'  = Just (l, wd, bt) -- Special character '$', ignore it!
+ | c == '%'  = Just (l, wd, bt) -- Special character '%', ignore it!
+ | c == '^'  = Just (l, wd, bt) -- Special character '^', ignore it!
+ | c == '&'  = Just (l, wd, bt) -- Special character '&', ignore it!
+ | c == '*'  = Just (l, wd, bt) -- Special character '*', ignore it!
+ | c == '-'  = Just (l, wd, bt) -- Special character '-', ignore it!
+ | c == '+'  = Just (l, wd, bt) -- Special character '+', ignore it!
+ | c == '='  = Just (l, wd, bt) -- Special character '=', ignore it!
+ | c == '|'  = Just (l, wd, bt) -- Special character '|', ignore it!
+ | c == '}'  = Just (l, wd, bt) -- Special character '}', ignore it!
+ | c == '{'  = Just (l, wd, bt) -- Special character '{', ignore it!
+ | c == ']'  = Just (l, wd, bt) -- Special character ']', ignore it!
+ | c == '['  = Just (l, wd, bt) -- Special character '[', ignore it!
+ | c == ':'  = Just (l, wd, bt) -- Special character ':', ignore it!
+ | c == ';'  = Just (l, wd, bt) -- Special character ';', ignore it!
+ | c == '>'  = Just (l, wd, bt) -- Special character '>', ignore it!
+ | c == '<'  = Just (l, wd, bt) -- Special character '<', ignore it!
+ | c == '.'  = Just (l, wd, bt) -- Special character '.', ignore it!
+ | c == ','  = Just (l, wd, bt) -- Special character ',', ignore it!
+ | c == '?'  = Just (l, wd, bt) -- Special character '?', ignore it!
+ | c == '/'  = Just (l, wd, bt) -- Special character '/', ignore it!
  | otherwise = Just (l, c:wd, bt)
 -- set bt (add Tbr [] in bt)
 btset :: Int -> Tst -> Tst
@@ -51,3 +76,6 @@ chkfn :: (Int, String, Tst) -> Maybe (Int, String, Tst)
 chkfn (l, wd, bt)
  | l == 0    = Just (0, [], btadd wd l bt)
  | otherwise = Nothing
+treechk :: (Tst -> Bool) -> Maybe Tst -> Bool
+treechk _ Nothing  = False
+treechk x (Just y) = x y

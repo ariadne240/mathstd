@@ -6,10 +6,12 @@ module Cfteg1
 , cft4
 , cft5
 , cft6
+, cft7
 ) where
 
 import Cftdef
 import Cftegbase
+import Scftdef
 
 -- Elementary cfts
 cft1 :: Cft
@@ -24,28 +26,25 @@ cft4 = pfallt cft4wf
 cft4wf :: Vwf
 cft4wf = cft4tr . transtree
 cft4tr :: Maybe Tst -> Bool
-cft4tr Nothing  = False
-cft4tr (Just y) = True
--- Reallife cft
+cft4tr = treechk (\x -> True)
+-- Cft which checks tree structure
 cft5 :: Cft
 cft5 = pfallt cft5wf
 cft5wf :: Vwf
 cft5wf = cft5tr . transtree
 cft5tr :: Maybe Tst -> Bool
-cft5tr Nothing  = False
-cft5tr (Just x) = cft5trr ['f', 'g', 'h'] x
+cft5tr = treechk (cft5trr ['f', 'g', 'h'])
 cft5trr :: String -> Tst -> Bool
 cft5trr ls (Tnd [])     = False
 cft5trr ls (Tnd (x:xs)) = x `elem` ls
 cft5trr ls (Tbr y)      = and $ fmap (cft5trr ls) y
--- Reallife cft2
+-- More cft which checks tree structure
 cft6 :: Cft
 cft6 = pfallt cft6wf
 cft6wf :: Vwf
 cft6wf = cft6tr . transtree
 cft6tr :: Maybe Tst -> Bool
-cft6tr Nothing  = False
-cft6tr (Just x) = cft6trr ['x', 'y', 'z'] x
+cft6tr = treechk (cft6trr ['x', 'y', 'z'])
 cft6trr :: [Char] -> Tst -> Bool
 cft6trr ls (Tbr [])     = False
 cft6trr ls (Tbr (y:ys)) = case (y) of
@@ -59,3 +58,10 @@ cft6trr ls (Tbr (y:ys)) = case (y) of
                         (Tbr _) -> False
 cft6trr ls (Tnd [])     = False
 cft6trr ls (Tnd (x:xs)) = x `elem` ls
+-- Reallife Vbcft
+cft7 :: Vbcft
+cft7 = Vbcft cft6wf cft7pf cft7vpf
+cft7pf :: Vpf
+cft7pf = (\x -> True)
+cft7vpf :: Vverbosepf
+cft7vpf = (\x -> True)

@@ -22,6 +22,9 @@ type Cdpf = ([Wf], [Wf])
 data Pf = Pf (Maybe Cdpf) deriving (Eq, Ord, Show, Read)
 type Vpf = Cdpf -> Bool
 type Topf = Cdpf -> Pf
+class GenCft a where
+ vwf :: a -> Vwf
+ vpf :: a -> Vpf
 data Cft = Cft { vwf :: Vwf, vpf :: Vpf }
 -- vwf :: Cft -> Vwf, vpf :: Cft -> Vpf
 towf :: Cft -> Towf
