@@ -1,6 +1,6 @@
 -- the most fundamental library of mathstd, Cftdef
 module Cftdef
-( Exp, Wf, Vwf, Towf, Pf, Vpf, Topf
+( Exp, Cdwf, Wf, Vwf, Towf, Cdpf, Pf, Vpf, Topf
 , Cft(..), Purecft(..)
 , towf, topf
 ) where

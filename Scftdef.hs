@@ -18,8 +18,9 @@ instance Cft Vbcft where
  vpf (Vbcft x y _) = y
 instance Verbose Vbcft where
  vverbosepf (Vbcft _ _ x) = x
+-- type Cdpf = ([Wf], [Wf])
 type Cdverbosepf = ([Wf], [(Wf, String)])
-data Verbosepf = Verbosepf (Maybe Cdverbosepf)
+data Verbosepf = Verbosepf (Maybe Cdverbosepf) deriving (Eq, Ord, Show, Read)
 type Vverbosepf = Cdverbosepf -> Bool
 type Toverbosepf = Cdverbosepf -> Verbosepf
 toverbosepf :: Vbcft -> Toverbosepf
@@ -27,9 +28,13 @@ toverbosepf x y
  | vverbosepf x y = Verbosepf (Just y)
  | otherwise      = Verbosepf Nothing
 unverbosify :: Vverbosepf -> Vpf
-unverbosify x = (\x -> True)
+unverbosify = (. tovbtemp)
 verbosify :: Vpf -> Vverbosepf
-verbosify x = (\x -> True)
+verbosify = (. toprtemp)
+tovbtemp :: Cdpf -> Cdverbosepf
+tovbtemp (x, y) = (x, fmap (\z -> (z, "")) y) 
+toprtemp :: Cdverbosepf -> Cdpf
+toprtemp (x, y) = (x, fmap fst y)
 puretovb :: Purecft -> Vbcft
 puretovb (Purecft x y) = Vbcft x y (verbosify y)
 vbtopure :: Vbcft -> Purecft
