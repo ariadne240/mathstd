@@ -1,9 +1,18 @@
 -- main
+import System.Console.Haskeline
 import System.IO
 import Cftdef
 import Cftegbase
 import Cfteg1
 import Scftdef
+
+putconch :: MonadException m => String -> m String
+putconch = fmap dejust . runInputT defaultSettings . getInputLine
+putcon :: MonadException m => m String
+putcon = putconch "> "
+dejust :: Maybe String -> String
+dejust (Just x) = x
+dejust Nothing  = ""
 
 main :: IO()
 main = do
@@ -14,17 +23,31 @@ main = do
 welcome :: IO()
 welcome = do
  putStrLn "What do you want to do?"
- putStrLn "Possible choices: 'wf', 'pf', 'vbpf'"
- putStrLn "You can always shut down Mathverse with 'end'"
+ putStrLn "To get help, choose 'help'"
  putStrLn "If you want to add your own cft, shut down this and modify the code."
 -- The sentence above does not give you any rights to use, share or modify the code.
 -- It is NOT about license; I, and I alone have all rights.
- w <- getLine
+ w <- putcon
  case (w) of
+  "help"    -> helpmain
   "end"     -> shutdown
   "wf"      -> wfmain
   "vbpf"    -> vbpfmain
   otherwise -> exceptionmain
+
+helpmain :: IO()
+helpmain = do
+ putStrLn "* Help *"
+ putStrLn "E"
+ putStrLn "end: shut down Mathverse"
+ putStrLn "H"
+ putStrLn "help: get help"
+ putStrLn "V"
+ putStrLn "vbpf: check verbose pf"
+ putStrLn "W"
+ putStrLn "wf: check wf"
+ putStrLn ""
+ welcome
 
 shutdown :: IO()
 shutdown = do
@@ -45,25 +68,31 @@ wfmain = do
  putStrLn "Which cft do you want to use?"
  putStrLn "If you choose a name which does not exist, the default cft will be used."
  putStrLn "(The first character of cfts is always lower-case)"
- x <- getLine
+ x <- putcon
  putStrLn "Insert your expression."
- y <- getLine
+ y <- putconch "exp> "
  putStrLn "Your wf:"
  print $ towf (cftch x) y
  putStrLn ""
  welcome
+
+--pfmain :: IO()
 
 vbpfmain :: IO()
 vbpfmain = do
  putStrLn "Which cft do you want to use?"
  putStrLn "If you choose a name which does not exist, the default cft will be used."
  putStrLn "(The first character of cfts is always lower-case)"
- x <- getLine
+ x <- putcon
  putStrLn "How many premises and to-be-proved expressions?"
- m <- readLn
- n <- readLn
- premises <- sequence (replicate m getLine)
- tbproved <- sequence (replicate (2*n) getLine)
+ m2 <- putconch "pr> "
+ let m = read m2
+ n2 <- putconch "exp> "
+ let n = read n2
+ putStrLn "Now insert the premises."
+ premises <- sequence (replicate m $ putconch "pr> ")
+ putStrLn "Now insert the to-be-proved expressions."
+ tbproved <- sequence (replicate (2*n) (putconch "exp> "))
  let pfstring = makepfful premises tbproved
  putStrLn ""
  welcome
