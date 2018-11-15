@@ -1,7 +1,7 @@
 -- the rigid examples of cfts, Cfteg2
 module Cfteg2
 ( cft4, cft5, cft6 -- Purecft
-, cft7 -- Vbcft
+, cft7, cft8 -- Vbcft
 ) where
 
 import Cftdef
@@ -58,3 +58,10 @@ cft7pf :: Vpf
 cft7pf = unverbosify cft7vpf
 cft7vpf :: Vvbpf
 cft7vpf = (\x -> True)
+-- Reallife Vbcft2
+cft8 :: Vbcft
+cft8 = Vbcft cft6wf cft8pf cft8vpf
+cft8pf :: Vpf
+cft8pf = unverbosify cft8vpf
+cft8vpf :: Vvbpf
+cft8vpf = (\x -> True)

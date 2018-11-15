@@ -17,4 +17,5 @@ cftch "cft4" = puretovb cft4
 cftch "cft5" = puretovb cft5
 cftch "cft6" = puretovb cft6
 cftch "cft7" = cft7
+cftch "cft8" = cft8
 cftch _      = puretovb cft1 -- default cft
