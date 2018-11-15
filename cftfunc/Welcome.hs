@@ -11,6 +11,7 @@ import Cftegbase
 import Cfteg1
 -- functions import
 import Fhelp
+import Fexception
 
 welcome :: IO()
 welcome = do
@@ -41,12 +42,6 @@ shutdown = do
  putStrLn ""
  putStrLn "Good bye."
  putStrLn "Mathverse Shutting down..."
- putStrLn ""
--- function fexception
-fexception :: IO()
-fexception = do
- putStrLn "Not yet implemented or not a valid function"
- putStrLn "Choose other options..."
  putStrLn ""
 -- function fwf
 fwf :: IO()
