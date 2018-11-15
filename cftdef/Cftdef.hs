@@ -19,7 +19,7 @@ module Cftdef
 -- the function to extract towf info from Cft
 , towf
 -- the function to extract topf info from Cft
-, topf
+, topf, topf23
 ) where
 
 -- The definition of Exp
@@ -56,10 +56,9 @@ topf :: Cft a => a -> Topf
 topf x y
  | vpf x y   = Pf (Just y)
  | otherwise = Pf Nothing
-
 -- topf01 :: Cft a => a -> Oripf -> Midpf1 -- Not useful
 -- topf01 _ = lines
 -- topf12 :: Cft a => a -> Midpf1 -> Midpf2 -- Impossible
 -- topf12 _
--- topf23 :: Cft a => a -> Midpf2 -> Midpf3
--- topf23 x
+topf23 :: Cft a => a -> Midpf2 -> Midpf3
+topf23 c (x, y) = (fmap (towf c) x, fmap (towf c) y)

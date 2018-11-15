@@ -11,12 +11,14 @@ module Vbcftdef
 -- a class for cft with additional information of vbpf
 , Vbcft(..)
 -- the function to extract tovbpf info from Vbcft
-, tovbpf
+, tovbpf, tovbpf34
 -- * Compatibility *
 -- Verbose pf to Pf, Pf to Verbose pf
 , unverbosify, verbosify
 -- Purecft to Vbcft, Vbcft to Purecft
 , puretovb, vbtopure
+-- Help to transfrom exp to wf
+, makepfful
 ) where
 
 import Cftdef
@@ -45,6 +47,9 @@ tovbpf :: Vbcft -> Tovbpf
 tovbpf x y
  | vvbpf x y = Vbpf (Just y)
  | otherwise = Vbpf Nothing
+tovbpf34 :: Cft a => a -> Midvbpf3 -> Midvbpf4
+tovbpf34 c (x, y) = (fmap (towf c) x, fmap (\(w, z) -> (towf c w, z)) y)
+-- topf23 c (x, y) = (fmap (towf c) x, fmap (towf c) y)
 -- * Compatibility *
 -- Verbose pf to Pf, Pf to Verbose pf
 unverbosify :: Vvbpf -> Vpf
@@ -60,3 +65,10 @@ puretovb :: Purecft -> Vbcft
 puretovb (Purecft x y) = Vbcft x y (verbosify y)
 vbtopure :: Vbcft -> Purecft
 vbtopure (Vbcft x y z) = Purecft x y
+-- Help to transfrom exp to wf
+makel2 :: [String] -> [(Exp, String)]
+makel2 []        = []
+makel2 [x]       = [(x, "")]
+makel2 (x:x2:xs) = (x, x2):(makel2 xs)
+makepfful :: [Exp] -> [String] -> Midvbpf3
+makepfful x y = (x, makel2 y)
