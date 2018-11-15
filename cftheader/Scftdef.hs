@@ -31,9 +31,9 @@ unverbosify :: Vverbosepf -> Vpf
 unverbosify = (. tovbtemp)
 verbosify :: Vpf -> Vverbosepf
 verbosify = (. toprtemp)
-tovbtemp :: Cdpf -> Cdverbosepf
+tovbtemp :: Midpf3 -> Cdverbosepf
 tovbtemp (x, y) = (x, fmap (\z -> (z, "")) y) 
-toprtemp :: Cdverbosepf -> Cdpf
+toprtemp :: Cdverbosepf -> Midpf3
 toprtemp (x, y) = (x, fmap fst y)
 puretovb :: Purecft -> Vbcft
 puretovb (Purecft x y) = Vbcft x y (verbosify y)

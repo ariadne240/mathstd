@@ -1,20 +1,25 @@
 -- the most fundamental library of mathstd, Cftdef
 module Cftdef
-( Exp, Cdwf, Wf, Vwf, Towf, Cdpf, Pf, Vpf, Topf
+( Exp -- the origin of everything. a piece of wanted-to-be-wf
+, Oriwf, Wf, Vwf, Towf -- about wf
+, Oripf, Midpf1, Midpf2, Midpf3, Pf, Vpf, Topf -- about pf
 , Cft(..), Purecft(..)
 , towf, topf
 ) where
 
 -- The definition of CFT(Computable Formal Theory)
 type Exp = String
-type Cdwf = Exp
-data Wf = Wf (Maybe Cdwf) deriving (Eq, Ord, Show, Read)
-type Vwf = Cdwf -> Bool
-type Towf = Cdwf -> Wf
-type Cdpf = ([Wf], [Wf])
-data Pf = Pf (Maybe Cdpf) deriving (Eq, Ord, Show, Read)
-type Vpf = Cdpf -> Bool
-type Topf = Cdpf -> Pf
+type Oriwf = Exp
+data Wf = Wf (Maybe Oriwf) deriving (Eq, Ord, Show, Read)
+type Vwf = Oriwf -> Bool
+type Towf = Oriwf -> Wf
+type Oripf = Exp
+type Midpf1 = [Exp]
+type Midpf2 = ([Exp], [Exp])
+type Midpf3 = ([Wf], [Wf])
+data Pf = Pf (Maybe Midpf3) deriving (Eq, Ord, Show, Read)
+type Vpf = Midpf3 -> Bool
+type Topf = Midpf3 -> Pf
 class Cft a where
  vwf :: a -> Vwf
  vpf :: a -> Vpf
