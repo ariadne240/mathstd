@@ -2,7 +2,9 @@
 module Scftdef
 (
 -- Verbose part
-  Verbose(..), Vbcft(..), Verbosepf, Cdverbosepf, Vverbosepf, Toverbosepf
+  Verbose(..) -- a typeclas for cft with verboseness
+, Vbcft(..) -- a class for cft with additional information of verbosepf
+, Verbosepf, Oriverbosepf, Midverbosepf1, Cdverbosepf, Vverbosepf, Toverbosepf
 , toverbosepf
 , unverbosify, verbosify -- Verbose pf to Pf, Pf to Verbose pf
 , puretovb, vbtopure -- Purecft to Vbcft, Vbcft to Purecft
@@ -19,6 +21,8 @@ instance Cft Vbcft where
 instance Verbose Vbcft where
  vverbosepf (Vbcft _ _ x) = x
 -- type Cdpf = ([Wf], [Wf])
+type Oriverbosepf = String
+type Midverbosepf1 = [String]
 type Cdverbosepf = ([Wf], [(Wf, String)])
 data Verbosepf = Verbosepf (Maybe Cdverbosepf) deriving (Eq, Ord, Show, Read)
 type Vverbosepf = Cdverbosepf -> Bool
