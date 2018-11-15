@@ -1,6 +1,6 @@
 -- The main part of the console-like environment, Welcome
 module Welcome
-( welcome
+( welcome, putconch, putcon
 ) where
 
 import System.Console.Haskeline
@@ -9,6 +9,8 @@ import Cftdef
 import Vbcftdef
 import Cftegbase
 import Cfteg1
+-- functions import
+import Fhelp
 
 welcome :: IO()
 welcome = do
@@ -19,42 +21,36 @@ welcome = do
 -- It is NOT about license; I, and I alone have all rights.
  w <- putcon
  case (w) of
-  "help"    -> helpmain
   "end"     -> shutdown
-  "wf"      -> wfmain
-  "vbpf"    -> vbpfmain
-  otherwise -> exceptionmain
+  "help"    -> fc fhelp
+  "wf"      -> fc fwf
+  "vbpf"    -> fc fvbpf
+  otherwise -> fc fexception
+-- gets input with fancy effects
+putconch :: MonadException m => String -> m String
+putconch = fmap dejust . runInputT defaultSettings . getInputLine
+putcon :: MonadException m => m String
+putcon = putconch "> "
+-- fc for function call
+fc :: IO() -> IO()
+fc = (>> welcome)
 
-helpmain :: IO()
-helpmain = do
- putStrLn "* Help *"
- putStrLn "E"
- putStrLn "end: shut down Mathverse"
- putStrLn "H"
- putStrLn "help: get help"
- putStrLn "V"
- putStrLn "vbpf: check verbose pf"
- putStrLn "W"
- putStrLn "wf: check wf"
- putStrLn ""
- welcome
-
+-- function shutdown
 shutdown :: IO()
 shutdown = do
  putStrLn ""
  putStrLn "Good bye."
  putStrLn "Mathverse Shutting down..."
  putStrLn ""
-
-exceptionmain :: IO()
-exceptionmain = do
+-- function fexception
+fexception :: IO()
+fexception = do
  putStrLn "Not yet implemented or not a valid function"
  putStrLn "Choose other options..."
  putStrLn ""
- welcome
-
-wfmain :: IO()
-wfmain = do
+-- function fwf
+fwf :: IO()
+fwf = do
  putStrLn "Which cft do you want to use?"
  putStrLn "If you choose a name which does not exist, the default cft will be used."
  putStrLn "(The first character of cfts is always lower-case)"
@@ -64,12 +60,11 @@ wfmain = do
  putStrLn "Your wf:"
  print $ towf (cftch x) y
  putStrLn ""
- welcome
-
---pfmain :: IO()
-
-vbpfmain :: IO()
-vbpfmain = do
+-- function fpf
+-- fpf :: IO()
+-- function fvbpf
+fvbpf :: IO()
+fvbpf = do
  putStrLn "Which cft do you want to use?"
  putStrLn "If you choose a name which does not exist, the default cft will be used."
  putStrLn "(The first character of cfts is always lower-case)"
@@ -85,12 +80,7 @@ vbpfmain = do
  tbproved <- sequence (replicate (2*n) (putconch "exp> "))
  let pfstring = makepfful premises tbproved
  putStrLn ""
- welcome
 
-putconch :: MonadException m => String -> m String
-putconch = fmap dejust . runInputT defaultSettings . getInputLine
-putcon :: MonadException m => m String
-putcon = putconch "> "
 dejust :: Maybe String -> String
 dejust (Just x) = x
 dejust Nothing  = ""

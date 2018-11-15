@@ -2,16 +2,16 @@
 module Vbcftdef
 (
 -- * Verbose *
--- a process to make verbosepf
-  Oriverbosepf, Midverbosepf1, Midverbosepf2, Midverbosepf3, Midverbosepf4, Verbosepf
--- verify and make verbosepf
-, Vverbosepf, Toverbosepf
+-- a process to make vbpf
+  Orivbpf, Midvbpf1, Midvbpf2, Midvbpf3, Midvbpf4, Vbpf
+-- verify and make vbpf
+, Vvbpf, Tovbpf
 -- a typeclass for cft with verboseness
 , Vb(..)
--- a class for cft with additional information of verbosepf
+-- a class for cft with additional information of vbpf
 , Vbcft(..)
--- the function to extract toverbosewf info from Vbcft
-, toverbosepf
+-- the function to extract tovbpf info from Vbcft
+, tovbpf
 -- * Compatibility *
 -- Verbose pf to Pf, Pf to Verbose pf
 , unverbosify, verbosify
@@ -21,38 +21,38 @@ module Vbcftdef
 
 import Cftdef
 
--- The definition of Verbosepf
-type Oriverbosepf = String
-type Midverbosepf1 = [String]
-type Midverbosepf2 = ([Exp], [String])
-type Midverbosepf3 = ([Exp], [(Exp, String)])
-type Midverbosepf4 = ([Wf], [(Wf, String)])
-data Verbosepf = Verbosepf (Maybe Midverbosepf4) deriving (Eq, Ord, Show, Read)
-type Vverbosepf = Midverbosepf4 -> Bool
-type Toverbosepf = Midverbosepf4 -> Verbosepf
--- The definition of typeclass Verbose
+-- The definition of Vbpf
+type Orivbpf = String
+type Midvbpf1 = [String]
+type Midvbpf2 = ([Exp], [String])
+type Midvbpf3 = ([Exp], [(Exp, String)])
+type Midvbpf4 = ([Wf], [(Wf, String)])
+data Vbpf = Vbpf (Maybe Midvbpf4) deriving (Eq, Ord, Show, Read)
+type Vvbpf = Midvbpf4 -> Bool
+type Tovbpf = Midvbpf4 -> Vbpf
+-- The definition of typeclass Vb
 class Vb a where
- vverbosepf :: a -> Vverbosepf
+ vvbpf :: a -> Vvbpf
 -- The definition of type Vbcft and related typeclasses
-data Vbcft = Vbcft Vwf Vpf Vverbosepf
+data Vbcft = Vbcft Vwf Vpf Vvbpf
 instance Cft Vbcft where
  vwf (Vbcft x y _) = x
  vpf (Vbcft x y _) = y
 instance Vb Vbcft where
- vverbosepf (Vbcft _ _ x) = x
--- The definition of the function to extract toverbosewf info from Vbcft
-toverbosepf :: Vbcft -> Toverbosepf
-toverbosepf x y
- | vverbosepf x y = Verbosepf (Just y)
- | otherwise      = Verbosepf Nothing
+ vvbpf (Vbcft _ _ x) = x
+-- The definition of the function to extract tovbpf info from Vbcft
+tovbpf :: Vbcft -> Tovbpf
+tovbpf x y
+ | vvbpf x y = Vbpf (Just y)
+ | otherwise = Vbpf Nothing
 -- Compatibility
-unverbosify :: Vverbosepf -> Vpf
+unverbosify :: Vvbpf -> Vpf
 unverbosify = (. tovbtemp)
-verbosify :: Vpf -> Vverbosepf
+verbosify :: Vpf -> Vvbpf
 verbosify = (. toprtemp)
-tovbtemp :: Midpf3 -> Midverbosepf4
+tovbtemp :: Midpf3 -> Midvbpf4
 tovbtemp (x, y) = (x, fmap (\z -> (z, "")) y) 
-toprtemp :: Midverbosepf4 -> Midpf3
+toprtemp :: Midvbpf4 -> Midpf3
 toprtemp (x, y) = (x, fmap fst y)
 puretovb :: Purecft -> Vbcft
 puretovb (Purecft x y) = Vbcft x y (verbosify y)
