@@ -64,4 +64,4 @@ cft8 = Vbcft cft6wf cft8pf cft8vpf
 cft8pf :: Vpf
 cft8pf = unverbosify cft8vpf
 cft8vpf :: Vvbpf
-cft8vpf = (\x -> True)
+cft8vpf (x, y) = True

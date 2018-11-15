@@ -10,13 +10,17 @@ import Cftch
 import Cftdef
 import Vbcftdef
 
--- function fwf
-fwf :: IO()
-fwf = do
+-- how to get cft name?
+getcft :: IO String
+getcft = do
  putStrLn "Which cft do you want to use?"
  putStrLn "If you choose a name which does not exist, the default cft will be used."
  putStrLn "(The first character of cfts is always lower-case)"
- x <- putconch "cft> "
+ putconch "cft> "
+-- function fwf
+fwf :: IO()
+fwf = do
+ x <- getcft
  putStrLn "Insert your expression."
  y <- putconch "exp> "
  putStrLn "[Result] Your wf:"
@@ -25,14 +29,11 @@ fwf = do
 -- function fpf
 fpf :: IO()
 fpf = do
- putStrLn "Which cft do you want to use?"
- putStrLn "If you choose a name which does not exist, the default cft will be used."
- putStrLn "(The first character of cfts is always lower-case)"
- x <- putconch "cft> "
+ x <- getcft
  putStrLn "How many premises and to-be-proved expressions?"
- m2 <- reptm
+ m2 <- repm
  let m = read m2
- n2 <- reptn
+ n2 <- repn
  let n = read n2
  if (n <= 0)
  then do
@@ -51,14 +52,11 @@ fpf = do
 -- function fvbpf
 fvbpf :: IO()
 fvbpf = do
- putStrLn "Which cft do you want to use?"
- putStrLn "If you choose a name which does not exist, the default cft will be used."
- putStrLn "(The first character of cfts is always lower-case)"
- x <- putconch "cft> "
+ x <- getcft
  putStrLn "How many premises and to-be-proved expressions?"
- m2 <- reptm
+ m2 <- repm
  let m = read m2
- n2 <- reptn
+ n2 <- repn
  let n = read n2
  if (n <= 0)
  then do
@@ -74,21 +72,21 @@ fvbpf = do
   then putStrLn "[Result] This verbose proof is valid."
   else putStrLn "[Result] This verbose proof is invalid."
  putStrLn ""
-reptm :: IO String
-reptm = do
+repm :: IO String
+repm = do
  m <- putconch "prem> "
  m <- if (not . and $ fmap isDigit m)
         then do
               putStrLn "Fatal error: Put a non-negative integer!"
-              reptm
+              repm
         else return m
  return m
-reptn :: IO String
-reptn = do
+repn :: IO String
+repn = do
  n <- putconch "exp> "
  n <- if (not . and $ fmap isDigit n)
         then do
               putStrLn "Fatal error: Put a positive integer!"
-              reptn
+              repn
         else return n
  return n
