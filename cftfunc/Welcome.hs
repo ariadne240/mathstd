@@ -6,9 +6,9 @@ module Welcome
 import System.Console.Haskeline
 import System.IO
 import Cftdef
+import Vbcftdef
 import Cftegbase
 import Cfteg1
-import Scftdef
 
 welcome :: IO()
 welcome = do

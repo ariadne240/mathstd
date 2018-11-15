@@ -1,32 +1,38 @@
--- the definition of Structured CFT(STCF), scftdef
-module Scftdef
+-- the definition of verbose CFT(VBCFT), vbcftdef
+module Vbcftdef
 (
--- Verbose part
-  Verbose(..) -- a typeclas for cft with verboseness
+-- * Verbose *
+-- a process to make verbosepf
+  Oriverbosepf, Midverbosepf1, Midverbosepf2, Cdverbosepf, Verbosepf, Vverbosepf, Toverbosepf
+, Verbose(..) -- a typeclass for cft with verboseness
 , Vbcft(..) -- a class for cft with additional information of verbosepf
-, Verbosepf, Oriverbosepf, Midverbosepf1, Cdverbosepf, Vverbosepf, Toverbosepf
+-- what is my toverbosepf of vbcft
 , toverbosepf
 , unverbosify, verbosify -- Verbose pf to Pf, Pf to Verbose pf
 , puretovb, vbtopure -- Purecft to Vbcft, Vbcft to Purecft
+
+-- * Interpret *
 ) where
 
 import Cftdef
 
-data Vbcft = Vbcft Vwf Vpf Vverbosepf
+type Oriverbosepf = String
+type Midverbosepf1 = [String]
+type Midverbosepf2 = ([Exp], [String])
+type Cdverbosepf = ([Wf], [(Wf, String)])
+data Verbosepf = Verbosepf (Maybe Cdverbosepf) deriving (Eq, Ord, Show, Read)
+type Vverbosepf = Cdverbosepf -> Bool
+type Toverbosepf = Cdverbosepf -> Verbosepf
+
 class Verbose a where
  vverbosepf :: a -> Vverbosepf
+data Vbcft = Vbcft Vwf Vpf Vverbosepf
 instance Cft Vbcft where
  vwf (Vbcft x y _) = x
  vpf (Vbcft x y _) = y
 instance Verbose Vbcft where
  vverbosepf (Vbcft _ _ x) = x
--- type Cdpf = ([Wf], [Wf])
-type Oriverbosepf = String
-type Midverbosepf1 = [String]
-type Cdverbosepf = ([Wf], [(Wf, String)])
-data Verbosepf = Verbosepf (Maybe Cdverbosepf) deriving (Eq, Ord, Show, Read)
-type Vverbosepf = Cdverbosepf -> Bool
-type Toverbosepf = Cdverbosepf -> Verbosepf
+
 toverbosepf :: Vbcft -> Toverbosepf
 toverbosepf x y
  | vverbosepf x y = Verbosepf (Just y)

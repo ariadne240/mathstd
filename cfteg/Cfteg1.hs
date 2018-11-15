@@ -6,7 +6,7 @@ module Cfteg1
 
 import Cftdef
 import Cftegbase
-import Scftdef
+import Vbcftdef
 
 -- Elementary cfts
 cft1 :: Purecft
