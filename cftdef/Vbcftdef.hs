@@ -7,7 +7,7 @@ module Vbcftdef
 -- verify and make verbosepf
 , Vverbosepf, Toverbosepf
 -- a typeclass for cft with verboseness
-, Verbose(..)
+, Vb(..)
 -- a class for cft with additional information of verbosepf
 , Vbcft(..)
 -- the function to extract toverbosewf info from Vbcft
@@ -31,14 +31,14 @@ data Verbosepf = Verbosepf (Maybe Midverbosepf4) deriving (Eq, Ord, Show, Read)
 type Vverbosepf = Midverbosepf4 -> Bool
 type Toverbosepf = Midverbosepf4 -> Verbosepf
 -- The definition of typeclass Verbose
-class Verbose a where
+class Vb a where
  vverbosepf :: a -> Vverbosepf
 -- The definition of type Vbcft and related typeclasses
 data Vbcft = Vbcft Vwf Vpf Vverbosepf
 instance Cft Vbcft where
  vwf (Vbcft x y _) = x
  vpf (Vbcft x y _) = y
-instance Verbose Vbcft where
+instance Vb Vbcft where
  vverbosepf (Vbcft _ _ x) = x
 -- The definition of the function to extract toverbosewf info from Vbcft
 toverbosepf :: Vbcft -> Toverbosepf
