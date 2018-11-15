@@ -12,6 +12,8 @@ fhelp = do
  putStrLn "end: shut down Mathverse"
  putStrLn "H"
  putStrLn "help: get help"
+ putStrLn "P"
+ putStrLn "pf: check pf"
  putStrLn "V"
  putStrLn "vbpf: check verbose pf"
  putStrLn "W"

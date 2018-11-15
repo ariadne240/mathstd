@@ -20,6 +20,8 @@ module Cftdef
 , towf
 -- the function to extract topf info from Cft
 , topf, topf23
+-- Help to transfrom exp to wf
+, makepfful
 ) where
 
 -- The definition of Exp
@@ -62,3 +64,6 @@ topf x y
 -- topf12 _
 topf23 :: Cft a => a -> Midpf2 -> Midpf3
 topf23 c (x, y) = (fmap (towf c) x, fmap (towf c) y)
+-- Help to transfrom exp to wf
+makepfful :: [Exp] -> [Exp] -> Midpf2
+makepfful = (,)

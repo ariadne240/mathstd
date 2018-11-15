@@ -22,6 +22,7 @@ welcome = do
   "end"     -> shutdown
   "help"    -> fc fhelp
   "wf"      -> fc fwf
+  "pf"      -> fc fpf
   "vbpf"    -> fc fvbpf
   otherwise -> fc fexception
 -- fc for function call

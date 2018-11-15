@@ -18,7 +18,7 @@ module Vbcftdef
 -- Purecft to Vbcft, Vbcft to Purecft
 , puretovb, vbtopure
 -- Help to transfrom exp to wf
-, makepfful
+, makevbpfful
 ) where
 
 import Cftdef
@@ -70,5 +70,5 @@ makel2 :: [String] -> [(Exp, String)]
 makel2 []        = []
 makel2 [x]       = [(x, "")]
 makel2 (x:x2:xs) = (x, x2):(makel2 xs)
-makepfful :: [Exp] -> [String] -> Midvbpf3
-makepfful x y = (x, makel2 y)
+makevbpfful :: [Exp] -> [String] -> Midvbpf3
+makevbpfful x y = (x, makel2 y)
