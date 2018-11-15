@@ -60,5 +60,5 @@ cft7pf :: Vpf
 cft7pf = unverbosify cft7vpf
 cft7vpf :: Vverbosepf
 cft7vpf = (\x -> True)
-cft7vppf :: ([String], [(String, String)]) -> Cdverbosepf
+cft7vppf :: ([String], [(String, String)]) -> Midverbosepf4
 cft7vppf x = ([], [])
