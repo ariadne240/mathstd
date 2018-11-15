@@ -1,7 +1,7 @@
 -- the base of making cft examples, Cftegbase
 module Cftegbase
 ( pfallt, pfallf
-, Tst(..)
+, Ttree(..), Tst
 , transtree, treechk
 ) where
 
@@ -13,10 +13,8 @@ pfallt u = Purecft u (\x -> True)
 pfallf :: Vwf -> Purecft
 pfallf u = Purecft u (\x -> False)
 -- Ttree for transformed tree
--- data Ttree a = Tnd a | Tbr { getTtree :: [Ttree a] } deriving (Show)
--- data Tst = Ttree String
--- But error occurred.... :(
-data Tst = Tnd String | Tbr { getTtree :: [Tst] } deriving (Eq, Ord, Show, Read)
+data Ttree a = Tnd a | Tbr { getTtree :: [Ttree a] } deriving (Eq, Ord, Show, Read)
+type Tst = Ttree String
 -- proc for processing: l for layer, wd for word, bt for building tree
 proc :: Char -> (Int, String, Tst) -> Maybe (Int, String, Tst)
 proc c (l, wd, bt)
@@ -76,3 +74,5 @@ chkfn (l, wd, bt)
 treechk :: (Tst -> Bool) -> Maybe Tst -> Bool
 treechk _ Nothing  = False
 treechk x (Just y) = x y
+
+

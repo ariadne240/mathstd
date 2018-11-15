@@ -45,7 +45,8 @@ tovbpf :: Vbcft -> Tovbpf
 tovbpf x y
  | vvbpf x y = Vbpf (Just y)
  | otherwise = Vbpf Nothing
--- Compatibility
+-- * Compatibility *
+-- Verbose pf to Pf, Pf to Verbose pf
 unverbosify :: Vvbpf -> Vpf
 unverbosify = (. tovbtemp)
 verbosify :: Vpf -> Vvbpf
@@ -54,6 +55,7 @@ tovbtemp :: Midpf3 -> Midvbpf4
 tovbtemp (x, y) = (x, fmap (\z -> (z, "")) y) 
 toprtemp :: Midvbpf4 -> Midpf3
 toprtemp (x, y) = (x, fmap fst y)
+-- Purecft to Vbcft, Vbcft to Purecft
 puretovb :: Purecft -> Vbcft
 puretovb (Purecft x y) = Vbcft x y (verbosify y)
 vbtopure :: Vbcft -> Purecft

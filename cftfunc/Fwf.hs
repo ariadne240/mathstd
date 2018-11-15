@@ -31,20 +31,20 @@ fvbpf = do
  putStrLn "(The first character of cfts is always lower-case)"
  x <- putcon
  putStrLn "How many premises and to-be-proved expressions?"
- m2 <- putconch "pr> "
+ m2 <- putconch "prem> "
  let m = read m2
  n2 <- putconch "exp> "
  let n = read n2
  putStrLn "Now insert the premises."
- premises <- sequence (replicate m $ putconch "pr> ")
+ premises <- sequence (replicate m $ putconch "prem> ")
  putStrLn "Now insert the to-be-proved expressions."
  tbproved <- sequence (replicate (2*n) (putconch "exp> "))
  let pfstring = makepfful premises tbproved
  putStrLn ""
 
-makel2 :: [String] -> [(String, String)]
+makel2 :: [String] -> [(Exp, String)]
 makel2 []        = []
 makel2 [x]       = [(x, "")]
 makel2 (x:x2:xs) = (x, x2):(makel2 xs)
-makepfful :: [String] -> [String] -> ([String], [(String, String)])
+makepfful :: [Exp] -> [String] -> Midvbpf3
 makepfful x y = (x, makel2 y)

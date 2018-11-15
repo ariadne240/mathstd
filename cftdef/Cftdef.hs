@@ -56,3 +56,10 @@ topf :: Cft a => a -> Topf
 topf x y
  | vpf x y   = Pf (Just y)
  | otherwise = Pf Nothing
+
+-- topf01 :: Cft a => a -> Oripf -> Midpf1 -- Not useful
+-- topf01 _ = lines
+-- topf12 :: Cft a => a -> Midpf1 -> Midpf2 -- Impossible
+-- topf12 _
+-- topf23 :: Cft a => a -> Midpf2 -> Midpf3
+-- topf23 x
