@@ -33,18 +33,10 @@ fvbpf = do
  x <- putconch "cft> "
  putStrLn "How many premises and to-be-proved expressions?"
  m2 <- putconch "prem> "
- m2 <- if (not . and $ fmap isDigit m2)
-        then do
-              putStrLn "Fatal error: Put a non-negative integer!"
-              putconch "prem> "
-        else return m2
+ m2 <- reptm2
  let m = read m2
  n2 <- putconch "exp> "
- n2 <- if (not . and $ fmap isDigit n2)
-        then do
-              putStrLn "Fatal error: Put a positive integer!"
-              putconch "exp> "
-        else return n2
+ n2 <- reptn2
  let n = read n2
  if (n <= 0)
  then do
@@ -60,3 +52,19 @@ fvbpf = do
   then putStrLn "[Result] This proof is valid."
   else putStrLn "[Result] This proof is invalid."
  putStrLn ""
+reptm2 :: IO String
+reptm2 = do
+ putStrLn "Fatal error: Put a non-negative integer!"
+ m2 <- putconch "prem> "
+ m2 <- if (not . and $ fmap isDigit m2)
+        then reptm2
+        else return m2
+ return m2
+reptn2 :: IO String
+reptn2 = do
+ putStrLn "Fatal error: Put a positive integer!"
+ n2 <- putconch "exp> "
+ n2 <- if (not . and $ fmap isDigit n2)
+        then reptn2
+        else return n2
+ return n2

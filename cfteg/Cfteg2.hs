@@ -39,13 +39,18 @@ cft6trr ls (Tbr (y:ys)) = case (y) of
                         (Tnd z) -> if (length z > 0 && (head z) `elem` ls)
                                    then True
                                    else case (z) of
+                                         "ft"   -> length ys == 0
+                                         "ff"   -> length ys == 0
                                          "fnot" -> length ys == 1 && and (fmap (cft6trr ls) ys)
                                          "fand" -> length ys == 2 && and (fmap (cft6trr ls) ys)
                                          "for"  -> length ys == 2 && and (fmap (cft6trr ls) ys)
+                                         "fif"  -> length ys == 2 && and (fmap (cft6trr ls) ys)
+                                         "fiff" -> length ys == 2 && and (fmap (cft6trr ls) ys)
                                          _      -> False
                         (Tbr _) -> False
-cft6trr ls (Tnd [])     = False
-cft6trr ls (Tnd (x:xs)) = x `elem` ls
+cft6trr ls (Tnd x)      = case (x) of
+                        []      -> False
+                        (xh:xs) -> xh `elem` ls || x `elem` ["ft", "ff"]
 -- Reallife Vbcft
 cft7 :: Vbcft
 cft7 = Vbcft cft6wf cft7pf cft7vpf
@@ -53,5 +58,3 @@ cft7pf :: Vpf
 cft7pf = unverbosify cft7vpf
 cft7vpf :: Vvbpf
 cft7vpf = (\x -> True)
-cft7vppf :: ([String], [(String, String)]) -> Midvbpf4
-cft7vppf x = ([], [])
