@@ -8,6 +8,7 @@ import Cftdef
 import Cftegbase
 import Vbcftdef
 import Data.List (inits)
+import Data.Char
 
 -- Using some trees
 cft4 :: Purecft
@@ -59,7 +60,7 @@ cft7pf :: Vpf
 cft7pf = unverbosify cft7vpf
 cft7vpf :: Vvbpf
 cft7vpf = (\x -> True)
--- Reallife Vbcft2
+-- Reallife Vbcft2: Hilbert System
 cft8 :: Vbcft
 cft8 = Vbcft cft6wf cft8pf cft8vpf
 cft8pf :: Vpf
@@ -92,14 +93,22 @@ axiom82 x = case (x) of
              otherwise                                   -> False
 axiom83 :: Tst -> Bool
 axiom83 x = case (x) of
-             (Tbr [Tnd "fif", y, Tbr [Tnd "fif", z, w]]) -> y == w
-             otherwise                                   -> False
+             (Tbr [Tnd "fif", Tbr [Tnd "fif", x1, Tbr [Tnd "fif", y1, z1]], Tbr [Tnd "fif", Tbr [Tnd "fif", x2, y2], Tbr [Tnd "fif", x3, z2]]]) -> x1 == x2 && x2 == x3 && y1 == y2 && z1 == z2
+             otherwise -> False
 axiom84 :: Tst -> Bool
 axiom84 x = case (x) of
-             (Tbr [Tnd "fif", y, Tbr [Tnd "fif", z, w]]) -> y == w
-             otherwise                                   -> False
+             (Tbr [Tnd "fif", Tbr [Tnd "fif", Tbr [Tnd "fnot", x1], Tbr [Tnd "fnot", y1]], Tbr [Tnd "fif", y2, x2]]) -> x1 == x2 && y1 == y2
+             otherwise -> False
 mp8 :: [String] -> [Tst] -> Tst -> Bool
-mp8 ll x y = True --TOBEFIXEDIMMEDIATELY
+mp8 tl x y
+ | and (fmap isDigit $ head tl) && and (fmap isDigit $ last tl) = 0 < wfn1 && 0 < wfn2 && wfn1 <= lx && wfn2 <= lx && (x !! (wfn2-1)) == Tbr [Tnd "fif", (x !! (wfn1-1)), y]
+-- x -/-> Tnd "x" but Tbr [Tnd "x"] so this need to be fixed but too many works...
+ | otherwise = False
+ where
+  wfn1 = read $ head tl
+  wfn2 = read $ last tl
+  lx = length x
+
 twftotree :: (Wf, String) -> (Tst, String)
 twftotree (x, y) = (wftotree x, y)
 wftotree :: Wf -> Tst
