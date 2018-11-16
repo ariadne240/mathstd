@@ -24,14 +24,8 @@ fpf :: IO()
 fpf = do
  x <- setcft
  putStrLn "How many premises and to-be-proved expressions?"
- m2 <- repm
- let m = read m2
- n2 <- repn
- let n = read n2
- if (n <= 0)
- then do
-       putStrLn "Error: You should put a positive integer."
- else return ()
+ m <- repm
+ n <- repn
  putStrLn "Now insert the premises."
  premises <- sequence (replicate m $ putconch "prem> ")
  putStrLn "Now insert the to-be-proved expressions."
@@ -47,14 +41,8 @@ fvbpf :: IO()
 fvbpf = do
  x <- setcft
  putStrLn "How many premises and to-be-proved expressions?"
- m2 <- repm
- let m = read m2
- n2 <- repn
- let n = read n2
- if (n <= 0)
- then do
-       putStrLn "Error: You should put a positive integer."
- else return ()
+ m <- repm
+ n <- repn
  putStrLn "Now insert the premises."
  premises <- sequence (replicate m $ putconch "prem> ")
  putStrLn "Now insert the to-be-proved expressions."
@@ -65,21 +53,21 @@ fvbpf = do
   then putStrLn "[Result] This verbose proof is valid."
   else putStrLn "[Result] This verbose proof is invalid."
  putStrLn ""
-repm :: IO String
+repm :: IO Int
 repm = do
  m <- putconch "prem> "
- m <- if (not . and $ fmap isDigit m)
+ m2 <- if (not . and $ fmap isDigit m)
         then do
               putStrLn "Fatal error: Put a non-negative integer!"
               repm
-        else return m
- return m
-repn :: IO String
+        else return $ read m
+ return m2
+repn :: IO Int
 repn = do
  n <- putconch "exp> "
- n <- if (not . and $ fmap isDigit n)
+ n2 <- if ((not . and $ fmap isDigit n) || read n <= 0)
         then do
               putStrLn "Fatal error: Put a positive integer!"
               repn
-        else return n
- return n
+        else return $ read n
+ return n2
