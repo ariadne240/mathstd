@@ -12,7 +12,7 @@ import Fwf
 
 welcome :: IO()
 welcome = do
- putStrLn "What do you want to do?"
+ putStrLn "Welcome. What do you want to do?"
  putStrLn "To get help, choose 'help'"
  putStrLn "If you want to add your own cft, shut down this and modify the code."
 -- The sentence above does not give you any rights to use, share or modify the code.
