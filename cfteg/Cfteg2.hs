@@ -7,6 +7,7 @@ module Cfteg2
 import Cftdef
 import Cftegbase
 import Vbcftdef
+import Data.List (inits)
 
 -- Using some trees
 cft4 :: Purecft
@@ -65,9 +66,12 @@ cft8pf :: Vpf
 cft8pf = unverbosify cft8vpf
 cft8vpf :: Vvbpf -- This method would be significantly inefficient. I'll fix it later.
 cft8vpf (x, y) = if (chkwfl x && chkwfl (fmap fst y))
-                  then True
+                  then vlongpf (longpf (x, y))
                   else False
-
+vlongpf :: [(Wf, String)] -> Bool
+vlongpf = and . fmap vspec . tail . inits
+vspec :: [(Wf, String)] -> Bool
+vspec = (\x -> True)
 -- check a list of wf whether every element is NOT Nothing
 chkwfl :: [Wf] -> Bool
 chkwfl [] = True

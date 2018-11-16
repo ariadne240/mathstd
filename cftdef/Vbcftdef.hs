@@ -19,6 +19,8 @@ module Vbcftdef
 , puretovb, vbtopure
 -- Help to transfrom exp to wf
 , makevbpfful
+-- Help to transform Midvbpf4 to [(Wf, String)]
+, longpf
 ) where
 
 import Cftdef
@@ -71,3 +73,6 @@ makel2 [x]       = [(x, "")]
 makel2 (x:x2:xs) = (x, x2):(makel2 xs)
 makevbpfful :: [Exp] -> [String] -> Midvbpf3
 makevbpfful x y = (x, makel2 y)
+-- Help to transform Midvbpf4 to [(Wf, String)]
+longpf :: Midvbpf4 -> [(Wf, String)]
+longpf (x, y) = fmap (flip (,) "premise") x ++ y

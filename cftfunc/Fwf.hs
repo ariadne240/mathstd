@@ -10,17 +10,10 @@ import Cftch
 import Cftdef
 import Vbcftdef
 
--- how to get cft name?
-getcft :: IO String
-getcft = do
- putStrLn "Which cft do you want to use?"
- putStrLn "If you choose a name which does not exist, the default cft will be used."
- putStrLn "(The first character of cfts is always lower-case)"
- putconch "cft> "
 -- function fwf
 fwf :: IO()
 fwf = do
- x <- getcft
+ x <- setcft
  putStrLn "Insert your expression."
  y <- putconch "exp> "
  putStrLn "[Result] Your wf:"
@@ -29,7 +22,7 @@ fwf = do
 -- function fpf
 fpf :: IO()
 fpf = do
- x <- getcft
+ x <- setcft
  putStrLn "How many premises and to-be-proved expressions?"
  m2 <- repm
  let m = read m2
@@ -52,7 +45,7 @@ fpf = do
 -- function fvbpf
 fvbpf :: IO()
 fvbpf = do
- x <- getcft
+ x <- setcft
  putStrLn "How many premises and to-be-proved expressions?"
  m2 <- repm
  let m = read m2
