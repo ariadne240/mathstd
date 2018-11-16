@@ -64,17 +64,55 @@ cft8 :: Vbcft
 cft8 = Vbcft cft6wf cft8pf cft8vpf
 cft8pf :: Vpf
 cft8pf = unverbosify cft8vpf
-cft8vpf :: Vvbpf -- This method would be significantly inefficient. I'll fix it later.
+cft8vpf :: Vvbpf
 cft8vpf (x, y) = if (chkwfl x && chkwfl (fmap fst y))
-                  then vlongpf (longpf (x, y))
+                  then (vlongpf . fmap twftotree . longpf) (x, y)
                   else False
-vlongpf :: [(Wf, String)] -> Bool
+vlongpf :: [(Tst, String)] -> Bool
 vlongpf = and . fmap vspec . tail . inits
-vspec :: [(Wf, String)] -> Bool
-vspec = (\x -> True)
+vspec :: [(Tst, String)] -> Bool
+vspec = vspec8 <$> fmap fst . init <*> fst . last <*> snd . last
+vspec8 :: [Tst] -> Tst -> String -> Bool
+vspec8 x y z
+ | hd == "premise" = True
+ | hd == "axiom"   = ll == 0 && axiom8 y
+ | hd == "rmp"     = ll == 2 && mp8 tl x y
+ | otherwise       = False
+ where
+  hd = (head . words) z
+  tl = (tail . words) z
+  ll = length tl
+axiom8 :: Tst -> Bool
+axiom8 = challlist [axiom81, axiom82, axiom83, axiom84]
+axiom81 :: Tst -> Bool
+axiom81 = (== Tbr [Tnd "ft"])
+axiom82 :: Tst -> Bool
+axiom82 x = case (x) of
+             (Tbr [Tnd "fif", y, Tbr [Tnd "fif", z, w]]) -> y == w
+             otherwise                                   -> False
+axiom83 :: Tst -> Bool
+axiom83 x = case (x) of
+             (Tbr [Tnd "fif", y, Tbr [Tnd "fif", z, w]]) -> y == w
+             otherwise                                   -> False
+axiom84 :: Tst -> Bool
+axiom84 x = case (x) of
+             (Tbr [Tnd "fif", y, Tbr [Tnd "fif", z, w]]) -> y == w
+             otherwise                                   -> False
+mp8 :: [String] -> [Tst] -> Tst -> Bool
+mp8 ll x y = True --TOBEFIXEDIMMEDIATELY
+twftotree :: (Wf, String) -> (Tst, String)
+twftotree (x, y) = (wftotree x, y)
+wftotree :: Wf -> Tst
+wftotree = dejusttr . transtree . dewf
+dejusttr :: Maybe Tst -> Tst
+dejusttr (Just x) = x
+dejusttr Nothing  = Tbr []
 -- check a list of wf whether every element is NOT Nothing
 chkwfl :: [Wf] -> Bool
 chkwfl [] = True
 chkwfl (x:xs) = if (x == Wf Nothing)
                  then False
                  else chkwfl xs
+-- check every conditions in a list and 'or' it
+challlist :: [a -> Bool] -> a -> Bool
+challlist x = or . (x <*>) . pure
