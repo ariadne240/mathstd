@@ -5,11 +5,11 @@ module Cftdef
 -- a piece of wanted-to-be-wf
   Exp
 -- a process to make wf
-, Oriwf, Wf
+, Oriwf, Wf(..)
 -- verify and make wf
 , Vwf, Towf
 -- a process to make pf
-, Oripf, Midpf1, Midpf2, Midpf3, Pf
+, Oripf, Midpf1, Midpf2, Midpf3, Pf(..)
 -- verify and make pf
 , Vpf, Topf
 -- a typeclass for general cfts

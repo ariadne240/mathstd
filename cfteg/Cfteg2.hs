@@ -63,5 +63,14 @@ cft8 :: Vbcft
 cft8 = Vbcft cft6wf cft8pf cft8vpf
 cft8pf :: Vpf
 cft8pf = unverbosify cft8vpf
-cft8vpf :: Vvbpf
-cft8vpf (x, y) = True
+cft8vpf :: Vvbpf -- This method would be significantly inefficient. I'll fix it later.
+cft8vpf (x, y) = if (chkwfl x && chkwfl (fmap fst y))
+                  then True
+                  else False
+
+-- check a list of wf whether every element is NOT Nothing
+chkwfl :: [Wf] -> Bool
+chkwfl [] = True
+chkwfl (x:xs) = if (x == Wf Nothing)
+                 then False
+                 else chkwfl xs

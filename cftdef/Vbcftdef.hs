@@ -3,7 +3,7 @@ module Vbcftdef
 (
 -- * Verbose *
 -- a process to make vbpf
-  Orivbpf, Midvbpf1, Midvbpf2, Midvbpf3, Midvbpf4, Vbpf
+  Orivbpf, Midvbpf1, Midvbpf2, Midvbpf3, Midvbpf4, Vbpf(..)
 -- verify and make vbpf
 , Vvbpf, Tovbpf
 -- a typeclass for cft with verboseness
@@ -49,7 +49,6 @@ tovbpf x y
  | otherwise = Vbpf Nothing
 tovbpf34 :: Cft a => a -> Midvbpf3 -> Midvbpf4
 tovbpf34 c (x, y) = (fmap (towf c) x, fmap (\(w, z) -> (towf c w, z)) y)
--- topf23 c (x, y) = (fmap (towf c) x, fmap (towf c) y)
 -- * Compatibility *
 -- Verbose pf to Pf, Pf to Verbose pf
 unverbosify :: Vvbpf -> Vpf
