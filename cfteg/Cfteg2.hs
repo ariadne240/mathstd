@@ -38,17 +38,15 @@ cft6tr = treechk (cft6trr ['x', 'y', 'z'])
 cft6trr :: [Char] -> Tst -> Bool
 cft6trr ls (Tbr [])     = False
 cft6trr ls (Tbr (y:ys)) = case (y) of
-                        (Tnd z) -> if (length z > 0 && (head z) `elem` ls)
-                                   then True
-                                   else case (z) of
-                                         "ft"   -> length ys == 0
-                                         "ff"   -> length ys == 0
-                                         "fnot" -> length ys == 1 && and (fmap (cft6trr ls) ys)
-                                         "fand" -> length ys == 2 && and (fmap (cft6trr ls) ys)
-                                         "for"  -> length ys == 2 && and (fmap (cft6trr ls) ys)
-                                         "fif"  -> length ys == 2 && and (fmap (cft6trr ls) ys)
-                                         "fiff" -> length ys == 2 && and (fmap (cft6trr ls) ys)
-                                         _      -> False
+                        (Tnd z) -> case (z) of
+                                    "ft"   -> length ys == 0
+                                    "ff"   -> length ys == 0
+                                    "fnot" -> length ys == 1 && and (fmap (cft6trr ls) ys)
+                                    "fand" -> length ys == 2 && and (fmap (cft6trr ls) ys)
+                                    "for"  -> length ys == 2 && and (fmap (cft6trr ls) ys)
+                                    "fif"  -> length ys == 2 && and (fmap (cft6trr ls) ys)
+                                    "fiff" -> length ys == 2 && and (fmap (cft6trr ls) ys)
+                                    _      -> False
                         (Tbr _) -> False
 cft6trr ls (Tnd x)      = case (x) of
                         []      -> False
@@ -86,7 +84,7 @@ vspec8 x y z
 axiom8 :: Tst -> Bool
 axiom8 = challlist [axiom81, axiom82, axiom83, axiom84]
 axiom81 :: Tst -> Bool
-axiom81 = (== Tbr [Tnd "ft"])
+axiom81 = (== Tnd "ft")
 axiom82 :: Tst -> Bool
 axiom82 x = case (x) of
              (Tbr [Tnd "fif", y, Tbr [Tnd "fif", z, w]]) -> y == w
@@ -102,7 +100,7 @@ axiom84 x = case (x) of
 mp8 :: [String] -> [Tst] -> Tst -> Bool
 mp8 tl x y
  | and (fmap isDigit $ head tl) && and (fmap isDigit $ last tl) = 0 < wfn1 && 0 < wfn2 && wfn1 <= lx && wfn2 <= lx && (x !! (wfn2-1)) == Tbr [Tnd "fif", (x !! (wfn1-1)), y]
--- x -/-> Tnd "x" but Tbr [Tnd "x"] so this need to be fixed but too many works...
+-- this need to be fixed but too many works...
  | otherwise = False
  where
   wfn1 = read $ head tl

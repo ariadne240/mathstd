@@ -62,17 +62,19 @@ btadd wd 0 = Tbr . ((Tnd wd):) . getTtree
 btadd wd l = Tbr . ((:) <$> btadd wd (l-1) . head <*> tail) . getTtree
 -- Change String to Maybe Tst (main function!)
 transtree :: String -> Maybe Tst
-transtree = (>>= (return . tuthird)) . (>>= chkfn) . foldr ((=<<) . proc) (return (0, [], Tbr []))
+transtree = (>>= (return . chkfn2 . tuthird)) . (>>= chkfn1) . foldr ((=<<) . proc) (return (0, [], Tbr []))
 -- gets the third element of the tuple
 tuthird :: (a, b, c) -> c
 tuthird (_, _, x) = x
 -- check finally before going into tuthird
-chkfn :: (Int, String, Tst) -> Maybe (Int, String, Tst)
-chkfn (l, wd, bt)
+chkfn1 :: (Int, String, Tst) -> Maybe (Int, String, Tst)
+chkfn1 (l, wd, bt)
  | l == 0    = Just (0, [], btadd wd l bt)
  | otherwise = Nothing
 treechk :: (Tst -> Bool) -> Maybe Tst -> Bool
 treechk _ Nothing  = False
 treechk x (Just y) = x y
-
-
+-- check after going into tuthird
+chkfn2 :: Tst -> Tst
+chkfn2 (Tbr [Tnd y]) = Tnd y
+chkfn2 x  = x 
