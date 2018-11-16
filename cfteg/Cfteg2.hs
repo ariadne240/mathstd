@@ -100,13 +100,12 @@ axiom84 x = case (x) of
 mp8 :: [String] -> [Tst] -> Tst -> Bool
 mp8 tl x y
  | and (fmap isDigit $ head tl) && and (fmap isDigit $ last tl) = 0 < wfn1 && 0 < wfn2 && wfn1 <= lx && wfn2 <= lx && (x !! (wfn2-1)) == Tbr [Tnd "fif", (x !! (wfn1-1)), y]
--- this need to be fixed but too many works...
  | otherwise = False
  where
   wfn1 = read $ head tl
   wfn2 = read $ last tl
   lx = length x
-
+-- (Wf, String) to (Tst, String)
 twftotree :: (Wf, String) -> (Tst, String)
 twftotree (x, y) = (wftotree x, y)
 wftotree :: Wf -> Tst

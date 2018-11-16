@@ -7,7 +7,7 @@ module Itpcftdef
 
 import Cftdef
 
-{--
+-- The definition of Ipt
 type Cdinterpretable = Exp
 data Interpretable = Interpretable (Maybe Cdinterpretable)
 type Vinterpretable = Cdinterpretable -> Bool
@@ -18,4 +18,3 @@ tointerpretable x y
  | otherwise = Interpretable Nothing
 interpret :: Interpretable -> Wf
 -- Prosperous CFT(PCFT) : CFT with structures rich enough
---}
