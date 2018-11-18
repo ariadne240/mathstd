@@ -22,8 +22,6 @@ module Cftdef
 , topf, topf23
 -- Help to transfrom exp to wf
 , makepfful
--- remove Just from Maybe String
-, dejustst
 -- Wf to Exp
 , dewf
 ) where
@@ -71,10 +69,6 @@ topf23 c (x, y) = (fmap (towf c) x, fmap (towf c) y)
 -- Help to transfrom exp to wf
 makepfful :: [Exp] -> [Exp] -> Midpf2
 makepfful = (,)
--- remove Just from Maybe String
-dejustst :: Maybe String -> String
-dejustst (Just x) = x
-dejustst Nothing  = ""
 -- Wf to Exp
 dewf :: Wf -> Exp
 dewf (Wf (Just x)) = x

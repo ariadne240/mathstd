@@ -3,7 +3,7 @@ import System.IO
 import Welcome
 import Fancyput
 
-main :: IO()
+main :: IO ()
 main = do
  putStrLn "Mathverse Turning on..."
  putStrLn ""
@@ -19,12 +19,12 @@ login x = do
   then do
         putStrLn ("Logging in with the account '"++id++"'...")
         putStrLn ""
-        welcome 
+        welcome
   else do
         putStrLn ("Wrong ID or password. "++(show (x-1))++" chance(s) left.")
         login (x-1)
 
-loginfail :: IO()
+loginfail :: IO ()
 loginfail = do
  putStrLn "Fatal error: This will be reported."
  putStrLn "Mathverse shutting down..."

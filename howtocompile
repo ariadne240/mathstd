@@ -1,1 +1,1 @@
-ghc -o main main.hs -icftdef -icfteg -icftfunc
+ghc -o main main.hs -icftdef -icfteg -icftfunc -igenlib
