@@ -34,8 +34,7 @@ loginfail = do
 
 ismem :: String -> String -> IO Bool
 ismem x y = do
- let input = "idpwin daybreak/username" ++ " " ++ x ++ " " ++ y
--- out <- readProcess "daybreak/purebreak" [] input
+ let input = "isrow daybreak/username" ++ " " ++ x ++ " " ++ y
  (Just hin, Just hout, _, ph) <- createProcess (proc "daybreak/daybreak" []){ std_in = CreatePipe, std_out = CreatePipe }
 {--
 It is an issue that the 'cwd' in createProcess works environment-dependently...

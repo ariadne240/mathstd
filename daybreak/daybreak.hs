@@ -25,7 +25,7 @@ opch x = do
   "select"  -> fc $ select op
   "desc"    -> fc $ desc op
   "create"  -> fc $ create op
-  "idpwin"  -> fc $ idpwin op
+  "isrow"   -> fc $ isrow op
   otherwise -> welcome
 
 select :: [String] -> IO ()
@@ -37,12 +37,18 @@ desc x = putStrLn "desc"
 create :: [String] -> IO ()
 create x = putStrLn "create"
 
-idpwin :: [String] -> IO ()
-idpwin x = do
- let nm = ((head . tail) x)
- let id = ((head . tail . tail) x)
- let pw = ((head . tail . tail . tail) x)
- let idpw = id ++ " " ++ pw
+isrow :: [String] -> IO ()
+isrow x = do
+ let lx = length x
+ let nm = (head . tail) x
  y <- readFile nm
+ let ly = (length . words . head . lines) y
  let yc = (tail . lines) y
- print (length x == 4 && idpw `elem` yc)
+ let fd = (tail . tail) x
+ let tok = putspace fd
+ print (lx >= 2 && lx == ly + 2 && tok `elem` yc)
+
+putspace :: [String] -> String
+putspace [] = []
+putspace [x] = x
+putspace (x:xs) = x ++ " " ++ putspace xs
