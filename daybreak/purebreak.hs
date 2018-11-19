@@ -1,14 +1,11 @@
 import System.Environment
-import Fancyput
 
 main :: IO ()
-main = do
- putStrLn "Welcome to daybreak."
- welcome
+main = welcome
 
 welcome :: IO ()
 welcome = do
- a <- putcon
+ a <- getLine
  opch a
 fc :: IO () -> IO ()
 fc = (>> welcome)
@@ -21,11 +18,11 @@ opch x = do
   putStrLn "Put a word"
   welcome
  else case (head op) of
-  "end"     -> putStrLn "Shutting down daybreak..."
+  "end"     -> return ()
   "select"  -> fc $ select op
   "desc"    -> fc $ desc op
   "create"  -> fc $ create op
-  "idpwin"  -> fc $ idpwin op
+  "idpwin"  -> idpwin op
   otherwise -> welcome
 
 select :: [String] -> IO ()

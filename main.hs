@@ -1,5 +1,6 @@
 -- main
 import System.IO
+import System.Process
 import Welcome
 import Fancyput
 
@@ -15,7 +16,8 @@ login x = do
  putStrLn "Log in:"
  id <- putconch "ID> "
  pw <- putconch "PW> "
- if (ismem id pw)
+ mem <- ismem id pw
+ if (mem)
   then do
         putStrLn ("Logging in with the account '"++id++"'...")
         putStrLn ""
@@ -29,8 +31,16 @@ loginfail = do
  putStrLn "Fatal error: This will be reported."
  putStrLn "Mathverse shutting down..."
 
-ismem :: String -> String -> Bool
-ismem x y = case (x) of
-             "root"    -> y == "root"
-             "ariadne" -> y == "ariadne"
-             otherwise -> False
+ismem :: String -> String -> IO Bool
+ismem x y = do
+ let input = "idpwin daybreak/username" ++ " " ++ x ++ " " ++ y
+ out <- readProcess "daybreak/purebreak" [] input
+-- (Just hin, Just hout, _, _) <- createProcess (proc "daybreak/purebreak" []){ std_in = CreatePipe, std_out = CreatePipe }
+-- hPutStr hin input
+-- out <- hGetContents hout
+ --let out2 = (head . tail . tail . lines) out
+ --print out2
+ case (out) of
+  "True" -> return True
+  "True\n" -> return True
+  otherwise -> return False
