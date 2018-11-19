@@ -36,22 +36,25 @@ ismem :: String -> String -> IO Bool
 ismem x y = do
  let input = "idpwin daybreak/username" ++ " " ++ x ++ " " ++ y
 -- out <- readProcess "daybreak/purebreak" [] input
- (Just hin, Just hout, _, ph) <- createProcess (proc "daybreak/purebreak" []){ std_in = CreatePipe, std_out = CreatePipe }
+ (Just hin, Just hout, _, ph) <- createProcess (proc "daybreak/daybreak" []){ std_in = CreatePipe, std_out = CreatePipe }
 {--
 It is an issue that the 'cwd' in createProcess works environment-dependently...
 I did not intend to use an absolute path so I used this:
 let input = "idpwin daybreak/username" ++ " " ++ x ++ " " ++ y
-(Just hin, Just hout, _, ph) <- createProcess (proc "daybreak/purebreak" []){ std_in = CreatePipe, std_out = CreatePipe }
+(Just hin, Just hout, _, ph) <- createProcess (proc "daybreak/daybreak" []){ std_in = CreatePipe, std_out = CreatePipe }
 instead of this:
 let input = "idpwin username" ++ " " ++ x ++ " " ++ y
-(Just hin, Just hout, _, ph) <- createProcess (proc "purebreak" []){ cwd = Just "daybreak", std_in = CreatePipe, std_out = CreatePipe }
+(Just hin, Just hout, _, ph) <- createProcess (proc "daybreak" []){ cwd = Just "daybreak", std_in = CreatePipe, std_out = CreatePipe }
 --}
  hPutStr hin input
  hClose hin
  out <- hGetLine hout
+ out2 <- hGetLine hout
  hClose hout
 -- waitForProcess ph
- case (out) of
+ case (out2) of
   "True" -> return True
   "True\n" -> return True
+  "> True" -> return True
+  "> True\n" -> return True
   otherwise -> return False
