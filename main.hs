@@ -39,9 +39,12 @@ ismem x y = do
  (Just hin, Just hout, _, ph) <- createProcess (proc "daybreak/purebreak" []){ std_in = CreatePipe, std_out = CreatePipe }
 {--
 It is an issue that the 'cwd' in createProcess works environment-dependently...
-If you get a problem then try this instead:
+I did not intend to use an absolute path so I used this:
 let input = "idpwin daybreak/username" ++ " " ++ x ++ " " ++ y
-
+(Just hin, Just hout, _, ph) <- createProcess (proc "daybreak/purebreak" []){ std_in = CreatePipe, std_out = CreatePipe }
+instead of this:
+let input = "idpwin username" ++ " " ++ x ++ " " ++ y
+(Just hin, Just hout, _, ph) <- createProcess (proc "purebreak" []){ cwd = Just "daybreak", std_in = CreatePipe, std_out = CreatePipe }
 --}
  hPutStr hin input
  hClose hin
