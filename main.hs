@@ -1,15 +1,17 @@
 -- main
 import System.IO
 import System.Process
--- import Control.Concurrent (forkIO)
-import Welcome
 import Fancyput
+-- functions import
+import Fhelp
+import Fexception
+import Fwf
 
 main :: IO ()
 main = do
  putStrLn "Mathverse Turning on..."
  putStrLn ""
- login 5
+ login loginav
 
 login :: Int -> IO ()
 login 0 = loginfail
@@ -57,3 +59,36 @@ let input = "idpwin username" ++ " " ++ x ++ " " ++ y
   "> True" -> return True
   "> True\n" -> return True
   otherwise -> return False
+
+welcome :: String -> IO()
+welcome id = do
+ putStrLn ("Dear "++id++", what do you want to do?")
+ putStrLn "To get help, choose 'help'"
+ w <- putcon
+ case (w) of
+  "end"     -> shutdown id
+  "help"    -> fc id fhelp
+  "logout"  -> logout id
+  "wf"      -> fc id fwf
+  "pf"      -> fc id fpf
+  "vbpf"    -> fc id fvbpf
+  otherwise -> fc id fexception
+-- fc for function call
+fc :: String -> IO() -> IO()
+fc id = (>> welcome id)
+-- function shutdown
+shutdown :: String -> IO()
+shutdown id = do
+ putStrLn ""
+ putStrLn ("Good bye, "++id++".")
+ putStrLn "Mathverse Shutting down..."
+ putStrLn ""
+-- function logout
+logout :: String -> IO()
+logout id = do
+ putStrLn ""
+ putStrLn ("Good bye, "++id++".")
+ login loginav
+-- how much login available?
+loginav :: Int
+loginav = 5
