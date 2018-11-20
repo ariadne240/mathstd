@@ -12,6 +12,8 @@ main :: IO ()
 main = do
  putStrLn "Mathverse Turning on..."
  putStrLn ""
+ license
+ putStrLn ""
  login loginav
 
 login :: Int -> IO ()
@@ -94,3 +96,13 @@ logout id = do
 -- how much login available?
 loginav :: Int
 loginav = 5
+
+
+
+
+
+
+license :: IO ()
+license = do
+ contents <- readFile "license"
+ putStr contents
