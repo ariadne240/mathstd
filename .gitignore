@@ -1,7 +1,6 @@
 *.o
 *.hi
 *.chi
-main
+# main
 howtocompile
-daybreak/daybreak
-daybreak/purebreak
+# daybreak/daybreak
