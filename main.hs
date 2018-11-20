@@ -104,5 +104,11 @@ loginav = 5
 
 license :: IO ()
 license = do
- contents <- readFile "license"
- putStr contents
+ putStrLn "To see the license of the packages that were used to build this code,"
+ putStrLn "type 'y' or 'Y'. To skip it, type anything else."
+ y <- getLine
+ if (y == "y" || y == "Y")
+  then do
+   contents <- readFile "license"
+   putStr contents
+  else return ()
