@@ -6,6 +6,7 @@ import Fancyput
 import Fhelp
 import Fexception
 import Fwf
+import Cftch
 
 main :: IO ()
 main = do
@@ -24,7 +25,7 @@ login x = do
   then do
         putStrLn ("Logging in with the account '"++id++"'...")
         putStrLn ""
-        welcome id
+        welcome id "cft1"
   else do
         putStrLn ("Wrong ID or password. "++(show (x-1))++" chance(s) left.")
         login (x-1)
@@ -60,22 +61,23 @@ let input = "idpwin username" ++ " " ++ x ++ " " ++ y
   "> True\n" -> return True
   otherwise -> return False
 
-welcome :: String -> IO()
-welcome id = do
+welcome :: String -> String -> IO()
+welcome id c = do
  putStrLn ("Dear "++id++", what do you want to do?")
  putStrLn "To get help, choose 'help'"
  w <- putcon
  case (w) of
   "end"     -> shutdown id
-  "help"    -> fc id fhelp
+  "help"    -> fc id c fhelp
   "logout"  -> logout id
-  "wf"      -> fc id fwf
-  "pf"      -> fc id fpf
-  "vbpf"    -> fc id fvbpf
-  otherwise -> fc id fexception
+  "setcft"  -> setcft c >>= welcome id
+  "wf"      -> fc id c (fwf c)
+  "pf"      -> fc id c (fpf c)
+  "vbpf"    -> fc id c (fvbpf c)
+  otherwise -> fc id c fexception
 -- fc for function call
-fc :: String -> IO() -> IO()
-fc id = (>> welcome id)
+fc :: String -> String -> IO() -> IO()
+fc id c = (>> welcome id c)
 -- function shutdown
 shutdown :: String -> IO()
 shutdown id = do

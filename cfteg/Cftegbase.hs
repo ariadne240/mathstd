@@ -25,11 +25,11 @@ proc c (l, wd, bt)
                 _ -> Just (l-1, [], btadd wd l bt)
  -- takes some care of special characters...
  | c == '~'  = Just (l, wd, bt) -- Special character '~', ignore it!
- | c == '`'  = Just (l, wd, bt) -- Special character '`', for ` method
+ | c == '`'  = Just (l, c:wd, bt) -- Special character '`', for ` method
  | c == '!'  = Just (l, wd, bt) -- Special character '!', ignore it!
  | c == '@'  = Just (l, wd, bt) -- Special character '@', ignore it!
  | c == '#'  = Just (l, wd, bt) -- Special character '#', ignore it!
- | c == '$'  = Just (l, wd, bt) -- Special character '$', for $ method
+ | c == '$'  = Just (l, c:wd, bt) -- Special character '$', for $ method
  | c == '%'  = Just (l, wd, bt) -- Special character '%', ignore it!
  | c == '^'  = Just (l, wd, bt) -- Special character '^', ignore it!
  | c == '&'  = Just (l, wd, bt) -- Special character '&', ignore it!

@@ -24,9 +24,10 @@ cftch "cft8" = cft8
 cftch _      = puretovb cft1 -- default cft
 
 -- how to set a cft?
-setcft :: IO String
-setcft = do
- putStrLn "Which cft do you want to use?"
- putStrLn "If you choose a name which does not exist, the default cft will be used."
- putStrLn "(The first character of cfts is always lower-case)"
- putconch "cft> "
+setcft :: String -> IO String
+setcft c = do
+ putStrLn ("Which cft do you want to use? (Now: "++c++")")
+ putStrLn "If you choose a name which does not exist, the default cft(cft1) will be used."
+ cft <- putconch "cft> "
+ putStrLn ""
+ return cft
