@@ -10,24 +10,21 @@ import Fhelp
 import Fexception
 import Fwf
 
-welcome :: IO()
-welcome = do
- putStrLn "Welcome. What do you want to do?"
+welcome :: String -> IO()
+welcome id = do
+ putStrLn ("Dear "++id++", what do you want to do?")
  putStrLn "To get help, choose 'help'"
- putStrLn "If you want to add your own cft, shut down this and modify the code."
--- The sentence above does not give you any rights to use, share or modify the code.
--- It is NOT about license; I, and I alone have all rights.
  w <- putcon
  case (w) of
   "end"     -> shutdown
-  "help"    -> fc fhelp
-  "wf"      -> fc fwf
-  "pf"      -> fc fpf
-  "vbpf"    -> fc fvbpf
-  otherwise -> fc fexception
+  "help"    -> fc id fhelp
+  "wf"      -> fc id fwf
+  "pf"      -> fc id fpf
+  "vbpf"    -> fc id fvbpf
+  otherwise -> fc id fexception
 -- fc for function call
-fc :: IO() -> IO()
-fc = (>> welcome)
+fc :: String -> IO() -> IO()
+fc id = (>> welcome id)
 -- function shutdown
 shutdown :: IO()
 shutdown = do
