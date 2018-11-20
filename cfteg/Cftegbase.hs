@@ -25,11 +25,11 @@ proc c (l, wd, bt)
                 _ -> Just (l-1, [], btadd wd l bt)
  -- takes some care of special characters...
  | c == '~'  = Just (l, wd, bt) -- Special character '~', ignore it!
- | c == '`'  = Just (l, wd, bt) -- Special character '`', ignore it!
+ | c == '`'  = Just (l, wd, bt) -- Special character '`', for ` method
  | c == '!'  = Just (l, wd, bt) -- Special character '!', ignore it!
  | c == '@'  = Just (l, wd, bt) -- Special character '@', ignore it!
  | c == '#'  = Just (l, wd, bt) -- Special character '#', ignore it!
- | c == '$'  = Just (l, wd, bt) -- Special character '$', ignore it!
+ | c == '$'  = Just (l, wd, bt) -- Special character '$', for $ method
  | c == '%'  = Just (l, wd, bt) -- Special character '%', ignore it!
  | c == '^'  = Just (l, wd, bt) -- Special character '^', ignore it!
  | c == '&'  = Just (l, wd, bt) -- Special character '&', ignore it!
@@ -50,7 +50,12 @@ proc c (l, wd, bt)
  | c == ','  = Just (l, wd, bt) -- Special character ',', ignore it!
  | c == '?'  = Just (l, wd, bt) -- Special character '?', ignore it!
  | c == '/'  = Just (l, wd, bt) -- Special character '/', ignore it!
- | otherwise = Just (l, c:wd, bt)
+ | normch c  = Just (l, c:wd, bt)
+ | otherwise = Just (l, wd, bt) -- Other special characters, ignore it!
+-- Do not use backslash('\') which might raise confusions
+-- A~Z, a~z, 0~9, _
+normch :: Char -> Bool
+normch x = x `elem` "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_"
 -- set bt (add Tbr [] in bt)
 btset :: Int -> Tst -> Tst
 btset 0 = Tbr . ((Tbr []):) . getTtree
