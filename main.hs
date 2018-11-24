@@ -96,15 +96,11 @@ logout id = do
 -- how much login available?
 loginav :: Int
 loginav = 5
-
-
-
-
-
-
+-- the function which shows the license
 license :: IO ()
 license = do
- putStrLn "To see the license of the packages that were used to build this code,"
+ putStrLn "To see the copyright of this code itself and"
+ putStrLn "the license of packages that were used to build this code,"
  putStrLn "type 'y' or 'Y'. To skip it, type anything else."
  y <- getLine
  if (y == "y" || y == "Y")

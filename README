@@ -1,4 +1,7 @@
 README
+
+Copyright (C), 2018, by ariadne240. All rights reserved.
+
 To compile "main", do:
 ghc -o main main.hs -icftdef -icfteg -icftfun -igenlib
 To compile "daybreak", in the subdirectory "daybreak" do:
