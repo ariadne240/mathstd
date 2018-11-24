@@ -1,0 +1,14 @@
+* HELP *
+In alphabetic order
+[E]
+ end: shut down Mathverse
+[H]
+ help: get help
+[L]
+ logout: log out
+[P]
+ pf: check pf
+[V]
+ vbpf: check verbose pf
+[W]
+ wf: check wf
