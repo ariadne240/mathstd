@@ -11,17 +11,16 @@ import Cftdef
 import Vbcftdef
 
 -- function fwf
-fwf :: String -> IO()
-fwf x = do
+fwf :: String -> String -> IO()
+fwf x w = do
  let xc = cftch x
  putStrLn "Insert your expression."
  y <- putconch "exp> "
  putStrLn "[Result] Your wf:"
  print $ towf xc y
- putStrLn ""
 -- function fpf
-fpf :: String -> IO()
-fpf x = do
+fpf :: String -> String -> IO()
+fpf x w = do
  let xc = cftch x
  putStrLn "How many premises and to-be-proved expressions?"
  m <- repm
@@ -35,10 +34,9 @@ fpf x = do
  if (vpf xc midpf3st)
   then putStrLn "[Result] This proof is valid."
   else putStrLn "[Result] This proof is invalid."
- putStrLn ""
 -- function fvbpf
-fvbpf :: String -> IO()
-fvbpf x = do
+fvbpf :: String -> String -> IO()
+fvbpf x w = do
  let xc = cftch x
  putStrLn "How many premises and to-be-proved expressions?"
  m <- repm
@@ -52,7 +50,6 @@ fvbpf x = do
  if (vvbpf xc midvbpf4st)
   then putStrLn "[Result] This verbose proof is valid."
   else putStrLn "[Result] This verbose proof is invalid."
- putStrLn ""
 repm :: IO Int
 repm = do
  m <- putconch "prem> "

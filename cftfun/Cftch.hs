@@ -1,6 +1,6 @@
 -- Choose cftch, Cftch
 module Cftch
-( cftch, setcft
+( cftch, setcft, getcft
 ) where
 
 import Cftdef
@@ -24,10 +24,19 @@ cftch "cft8" = cft8
 cftch _      = puretovb cft1 -- default cft
 
 -- how to set a cft?
-setcft :: String -> IO String
-setcft c = do
- putStrLn ("Which cft do you want to use? (Now: "++c++")")
- putStrLn "If you choose a name which does not exist, the default cft(cft1) will be used."
- cft <- putconch "cft> "
- putStrLn ""
- return cft
+setcft :: String -> String -> IO String
+setcft c w = do
+ let ww = words w
+ if (length ww == 1)
+  then do
+   putStrLn ("Which cft do you want to use? (Now: "++c++")")
+   putStrLn "If you choose a name which does not exist, the default cft(cft1) will be used."
+   cft <- putconch "cft> "
+   return cft
+  else return $ (head . tail) ww
+
+-- how to get a cft?
+getcft :: String -> String -> IO ()
+getcft c w = do
+ putStrLn ("Now, you are using the cft "++c++".")
+ putStrLn "If you want to use a different cft, use command 'setcft'."

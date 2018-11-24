@@ -4,8 +4,14 @@ I HAVE EXCLUSIVE RIGHTS TO THIS CODE AND PROGRAM. THIS IS NOT A FREE
 SOFTWARE. THE REDISTRIBUTION, IN SOURCE AND BINARY FORMS, WITH OR WITHOUT
 MODIFICATION, IS NOT PERMITTED, UNDER ANY CONDITIONS.
 
+-----------------------------------------------------------------------------
+-----------------------------------------------------------------------------
+
 Several libraries in BSD-style license packages are used. It is planned
 to replace them to my own codes.
+
+-----------------------------------------------------------------------------
+-----------------------------------------------------------------------------
 
 <base>
 
@@ -91,6 +97,7 @@ the following license:
   version is clearly presented as such, and that it does not claim to
   be a definition of the Haskell 98 Foreign Function Interface.
 
+-----------------------------------------------------------------------------
 -----------------------------------------------------------------------------
 
 <haskeline>

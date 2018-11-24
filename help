@@ -1,14 +1,18 @@
 * HELP *
 In alphabetic order
 [E]
- end: shut down Mathverse
+- end: shut down Mathverse
+[G]
+- getcft: get cft
 [H]
- help: get help
+- help: get help
 [L]
- logout: log out
+- logout: log out
 [P]
- pf: check pf
+- pf: check pf
+[S]
+- setcft: set cft
 [V]
- vbpf: check verbose pf
+- vbpf: check verbose pf
 [W]
- wf: check wf
+- wf: check wf

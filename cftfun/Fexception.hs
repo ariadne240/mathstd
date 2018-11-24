@@ -9,4 +9,3 @@ fexception :: IO()
 fexception = do
  putStrLn "Not yet implemented or not a valid function"
  putStrLn "Choose other options..."
- putStrLn ""

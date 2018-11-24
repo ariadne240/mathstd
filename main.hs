@@ -65,17 +65,20 @@ let input = "idpwin username" ++ " " ++ x ++ " " ++ y
 
 welcome :: String -> String -> IO()
 welcome id c = do
+ putStrLn ""
  putStrLn ("Dear "++id++", what do you want to do?")
  putStrLn "To get help, choose 'help'"
  w <- putcon
- case (w) of
+ let cmd = (head . words) w
+ case (cmd) of
   "end"     -> shutdown id
   "help"    -> fc id c fhelp
   "logout"  -> logout id
-  "setcft"  -> setcft c >>= welcome id
-  "wf"      -> fc id c (fwf c)
-  "pf"      -> fc id c (fpf c)
-  "vbpf"    -> fc id c (fvbpf c)
+  "getcft"  -> fc id c $ getcft c w
+  "setcft"  -> setcft c w >>= welcome id
+  "wf"      -> fc id c $ fwf c w
+  "pf"      -> fc id c $ fpf c w
+  "vbpf"    -> fc id c $ fvbpf c w
   otherwise -> fc id c fexception
 -- fc for function call
 fc :: String -> String -> IO() -> IO()
