@@ -1,6 +1,9 @@
 README
 
-Copyright (C), 2018, by ariadne240. All rights reserved.
+Copyright (C) 2018 ariadne240. All rights reserved.
+
+I decided to stop modifying this code momentarily.
+Instead, there will be a new version of project, Mathcon, with full LaTeX and HTML documents.
 
 To compile "main", do:
 ghc -o main main.hs -icftdef -icfteg -icftfun -igenlib

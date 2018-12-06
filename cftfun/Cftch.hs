@@ -8,7 +8,7 @@ import Vbcftdef
 import Cftegbase
 import Cfteg1
 import Cfteg2
--- For only setcft, to be moved to other part
+-- For only setcft and getcft, to be moved to other part
 import System.IO
 import Fancyput
 
